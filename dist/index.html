@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Build freight routes and keep the factories running in this free browser strategy game.">
+  <meta name="theme-color" content="#202420">
+  <title>Mini Factory Ways</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="assets/sprites.js"></script>
+  <script defer src="simulation.js"></script>
+  <script defer src="map-view.js"></script>
+  <script defer src="game.js"></script>
+</head>
+<body>
+  <header class="masthead">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">▦</span><h1>Mini Factory <em>Ways</em></h1></div>
+    <div class="header-actions">
+      <button id="help" type="button">How to play</button>
+      <button id="restart" type="button">New run</button>
+    </div>
+  </header>
+  <main class="console">
+    <section class="dashboard" aria-label="Run statistics">
+      <div class="district"><label for="district">Industrial district</label>
+        <select id="district"><option value="canal">Canal Works</option><option value="quarry">Granite Basin</option><option value="coast">Tidebreak Port</option></select>
+      </div>
+      <div class="stats">
+        <div><span>Delivered</span><strong id="score">000</strong></div>
+        <div><span>Best</span><strong id="best">000</strong></div>
+        <div><span>Shift</span><strong id="shift">01</strong></div>
+      </div>
+      <div class="transport" aria-label="Simulation speed">
+        <button type="button" id="pause" aria-label="Pause" title="Pause or resume (Space)">Ⅱ</button>
+        <button type="button" class="speed" data-speed="1" aria-pressed="true">1×</button>
+        <button type="button" class="speed" data-speed="2" aria-pressed="false">2×</button>
+        <button type="button" class="speed" data-speed="4" aria-pressed="false">4×</button>
+      </div>
+    </section>
+    <div class="workbench">
+      <section class="board" aria-label="Freight map">
+        <canvas id="map" tabindex="0" aria-label="Factory grid. Draw between tiles or use the arrow keys to move and Enter to apply the selected tool."></canvas>
+        <div class="board-status"><i></i><span id="mode">PLANNING</span></div>
+      </section>
+      <aside class="sidebar" aria-label="Dispatch controls">
+        <div class="side-head"><h2>Dispatch</h2><span id="connected">0 / 2 linked</span></div>
+        <div id="orders" class="orders"></div>
+        <div class="supply">
+          <div class="side-head"><h2>Construction</h2></div>
+          <div class="tools" role="group" aria-label="Construction tools">
+            <button type="button" class="tool" data-tool="road" aria-pressed="true"><span class="tool-icon">═</span><span>Road <kbd>1</kbd></span><b id="roads">36</b></button>
+            <button type="button" class="tool" data-tool="bridge" aria-pressed="false"><span class="tool-icon">≋</span><span>Bridge <kbd>2</kbd></span><b id="bridges">4</b></button>
+            <button type="button" class="tool" data-tool="erase" aria-pressed="false"><span class="tool-icon">×</span><span>Erase <kbd>3</kbd></span></button>
+            <button type="button" class="tool" id="undo" disabled><span class="tool-icon">↶</span><span>Undo <kbd>Z</kbd></span></button>
+          </div>
+        </div>
+        <div class="dispatch-footer">
+          <p id="hint" role="status">Drag from a supplier to its matching factory. You can plan before starting the shift.</p>
+          <button type="button" class="primary" id="start">Start shift</button>
+        </div>
+      </aside>
+    </div>
+    <footer class="foot"><span><i class="legend depot"></i> Supplier</span><span><i class="legend factory"></i> Factory</span><span><i class="legend rock"></i> Obstacle</span><span><i class="legend water"></i> Bridgeable water</span><span><i class="legend reserved">+</i> Future facility</span></footer>
+  </main>
+  <dialog id="dialog" aria-labelledby="dialog-title">
+    <form method="dialog">
+      <button class="close" value="cancel" aria-label="Close">×</button>
+      <h2 id="dialog-title"></h2>
+      <div id="dialog-body"></div>
+      <div id="dialog-actions"></div>
+    </form>
+  </dialog>
+</body>
+</html>
